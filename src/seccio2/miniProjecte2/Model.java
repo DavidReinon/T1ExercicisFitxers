@@ -7,13 +7,18 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.sound.midi.SysexMessage;
+
+import org.w3c.dom.UserDataHandler;
+
 public class Model {
 
 	private File fitxer;
 	private File nouFitxer;
 
 	Model() {
-		String rutaFitxer = "C:\\Users\\darega\\Proyectos\\2DAM\\JavaProjects\\Seccio2T1\\archiuMP2.txt";
+		String rutaFitxer = System.getProperty("user.dir");
+		rutaFitxer += "\\archiuMP2.txt";
 		fitxer = new File(rutaFitxer);
 	}
 
@@ -69,7 +74,8 @@ public class Model {
 	public boolean NouFitxerRemplazaParaula(String paraulaARemplazar, String paraulaNova) {
 		paraulaARemplazar = paraulaARemplazar.toLowerCase(); // Convertir a minúsculas
 		String nom = paraulaARemplazar + "-" + paraulaNova + ".txt";
-		nouFitxer = new File("C:\\Users\\darega\\Proyectos\\2DAM\\JavaProjects\\Seccio2T1\\", nom);
+		String rutaActual = System.getProperty("user.dir");
+		nouFitxer = new File(rutaActual, nom);
 
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(nouFitxer))) {
 			try (BufferedReader br = new BufferedReader(new FileReader(fitxer))) {
