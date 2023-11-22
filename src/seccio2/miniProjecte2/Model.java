@@ -51,16 +51,15 @@ public class Model {
 		String resultado = "";
 		int coincidencias = 0;
 
-		try (FileReader fr = new FileReader(fitxer)) {
-			BufferedReader br = new BufferedReader(fr);
+		try (BufferedReader br = new BufferedReader(new FileReader(fitxer))) {
 			String linea;
+			int indice = -1;
 
 			while ((linea = br.readLine()) != null) {
-				String[] palabras = linea.split("\\s+");
-				for (String palabra : palabras) {
-					if (palabra.equalsIgnoreCase(stringBuscado)) {
-						coincidencias++;
-					}
+				indice = linea.indexOf(stringBuscado);
+				while (indice >= 0) {
+					coincidencias++;
+					indice = linea.indexOf(stringBuscado, (indice + 1));
 				}
 			}
 		} catch (IOException e) {
@@ -85,7 +84,7 @@ public class Model {
 					paraulaARemplazar = paraulaARemplazar.toLowerCase();
 					paraulaNova = paraulaNova.toLowerCase();
 
-					lineaMinusculas = lineaMinusculas.replace(paraulaARemplazar, paraulaNova);
+					lineaMinusculas = lineaMinusculas.replaceAll(paraulaARemplazar, paraulaNova);
 					bw.write(lineaMinusculas);
 					bw.newLine();
 				}
